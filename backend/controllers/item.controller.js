@@ -2,8 +2,11 @@ import Item from "../models/item.model.js";
 
 export const addItem = async (req, res) => {
   try {
-    const { name, price, image, category, description, countInStock } =
-      req.body;
+    const { name, price, category, description, countInStock } = req.body;
+    const itemImageName = req.files.itemImage.name;
+    console.log(name, price, category, description, countInStock);
+    console.log(itemImageName);
+    var itemUpload = false;
 
     if (price < 0) {
       return res.status(400).json({ error: "Price cannot be negative" });
@@ -21,10 +24,16 @@ export const addItem = async (req, res) => {
       return res.status(201).json({ message: "Item  already exists!" });
     }
 
+    var desPath = path.join(__dirname, "./", itemUpload);
+
+    req.files.itemUpload.mv(desPath, function () {
+      console.log("File Saved in Uploads Successfully");
+    });
+
     const newItem = new Item({
       name,
       price,
-      image,
+      image: itemImageName,
       category,
       description,
       countInStock,
