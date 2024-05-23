@@ -25,8 +25,7 @@ const Home = () => {
     });
   };
   return (
-    <div className="flex">
-      Home
+    <div className="">
       <form
         // onSubmit={handleSubmit}
         action="/api/items/add"
@@ -68,6 +67,7 @@ const Home = () => {
         <button type="submit">submit</button>
       </form>
       <Navbar />
+
       <Footer />
     </div>
   );
