@@ -1148,6 +1148,7 @@ const Cards = ({ items }) => {
                     Add to Cart
                   </Button>
                 )}
+                {/* reference:https://www.youtube.com/watch?v=2BnTYEafRQc&t=1s&ab_channel=FullstackTechies */}
                 <div className="d-flex mt-2">
                   <WhatsappShareButton
                     url={`http://localhost:3000/${item._id}`}
