@@ -1029,7 +1029,6 @@ const Cards = ({ items }) => {
 export default Cards;*/
 
 import React, { useState, useEffect } from "react";
-import { Card, Button, Badge } from "react-bootstrap";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useCartItemsContext } from "../context/CartItemsContext";
@@ -1102,7 +1101,7 @@ const Cards = ({ items }) => {
   }, []);
 
   return (
-    <div className="d-flex flex-wrap justify-content-center">
+    <div className="flex flex-wrap justify-center">
       {items.length > 0 ? (
         items.map((item) => (
           <motion.div
@@ -1110,63 +1109,67 @@ const Cards = ({ items }) => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            style={{ width: "18rem", margin: "1rem", display: "flex" }}
+            className="card bg-base-100 w-96 shadow-xl m-4"
           >
-            <Card>
-              <Card.Img
-                variant="top"
+            <figure className="px-5 pt-10">
+              <img
                 src={`/api/items/images/${item.image}`}
                 alt={item.name}
+                className="rounded-xl cursor-pointer"
                 onClick={() => navigate(`/${item._id}`, { state: item._id })}
-                className="cursor-pointer"
               />
-              <Card.Body>
-                <Card.Title
-                  onClick={() => navigate(`/${item._id}`, { state: item._id })}
-                  className="cursor-pointer"
-                >
-                  {item.name}
-                </Card.Title>
-                <Card.Text
-                  onClick={() => navigate(`/${item._id}`, { state: item._id })}
-                  className="cursor-pointer"
-                >
-                  {truncateText(item.description, 8)}
-                </Card.Text>
-                <Card.Text>${item.price}</Card.Text>
-                {itemQuantities[item._id] ? (
-                  <div>
-                    <Button onClick={() => addCartItem()} variant="success">
-                      Add More
-                    </Button>
-                    <Badge pill variant="info" className="ml-2">
-                      {itemQuantities[item._id]}
-                    </Badge>
-                  </div>
-                ) : (
-                  <Button onClick={() => addToCart(item)} variant="primary">
-                    Add to Cart
-                  </Button>
-                )}
-                {/* reference:https://www.youtube.com/watch?v=2BnTYEafRQc&t=1s&ab_channel=FullstackTechies */}
-                <div className="d-flex mt-2">
-                  <WhatsappShareButton
-                    url={`http://localhost:3000/${item._id}`}
-                    title={item.name}
-                    separator=":: "
+            </figure>
+            <div className="card-body items-center text-center">
+              <h2
+                className="card-title cursor-pointer"
+                onClick={() => navigate(`/${item._id}`, { state: item._id })}
+              >
+                {item.name}
+              </h2>
+              <p
+                className="cursor-pointer"
+                onClick={() => navigate(`/${item._id}`, { state: item._id })}
+              >
+                {truncateText(item.description, 8)}
+              </p>
+              <p>${item.price}</p>
+              {itemQuantities[item._id] ? (
+                <div className="flex items-center mt-2">
+                  <button
+                    onClick={() => addCartItem()}
+                    className="btn btn-success"
                   >
-                    <WhatsappIcon size={32} round />
-                  </WhatsappShareButton>
-                  <FacebookShareButton
-                    url={`http://localhost:3000/${item._id}`}
-                    quote={item.name}
-                    className="ml-2"
-                  >
-                    <FacebookIcon size={32} round />
-                  </FacebookShareButton>
+                    Add More
+                  </button>
+                  <span className="badge badge-info ml-2">
+                    {itemQuantities[item._id]}
+                  </span>
                 </div>
-              </Card.Body>
-            </Card>
+              ) : (
+                <button
+                  onClick={() => addToCart(item)}
+                  className="btn btn-primary mt-2"
+                >
+                  Add to Cart
+                </button>
+              )}
+              <div className="flex mt-2">
+                <WhatsappShareButton
+                  url={`http://localhost:3000/${item._id}`}
+                  title={item.name}
+                  separator=":: "
+                >
+                  <WhatsappIcon size={32} round />
+                </WhatsappShareButton>
+                <FacebookShareButton
+                  url={`http://localhost:3000/${item._id}`}
+                  quote={item.name}
+                  className="ml-2"
+                >
+                  <FacebookIcon size={32} round />
+                </FacebookShareButton>
+              </div>
+            </div>
           </motion.div>
         ))
       ) : (
