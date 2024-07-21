@@ -1031,8 +1031,14 @@ export default Cards;*/
 import React, { useState, useEffect } from "react";
 import { Card, Button, Badge } from "react-bootstrap";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom"; // Import useNavigate hook
-import { useCartItemsContext } from "../context/CartItemsContext"; // Adjust path as per your context setup
+import { useNavigate } from "react-router-dom";
+import { useCartItemsContext } from "../context/CartItemsContext";
+import {
+  WhatsappShareButton,
+  FacebookShareButton,
+  WhatsappIcon,
+  FacebookIcon,
+} from "react-share";
 
 // Function to truncate text
 const truncateText = (text, wordLimit) => {
@@ -1048,10 +1054,10 @@ const Cards = ({ items }) => {
   // State to manage cart items and item quantities
   const [itemQuantities, setItemQuantities] = useState({});
 
-  const { cartItems, addToCart } = useCartItemsContext(); // Ensure correct usage
+  const { cartItems, addToCart } = useCartItemsContext();
   const [CartItemsQuantity, setCartItemsQuantity] = useState(0);
   const [CartItemsPrice, setCartItemsPrice] = useState(0);
-  const nevigate = useNavigate();
+  const navigate = useNavigate();
 
   const getCartItems = async () => {
     try {
@@ -1111,18 +1117,18 @@ const Cards = ({ items }) => {
                 variant="top"
                 src={`/api/items/images/${item.image}`}
                 alt={item.name}
-                onClick={() => nevigate(`/${item._id}`, { state: item._id })}
+                onClick={() => navigate(`/${item._id}`, { state: item._id })}
                 className="cursor-pointer"
               />
               <Card.Body>
                 <Card.Title
-                  onClick={() => nevigate(`/${item._id}`, { state: item._id })}
+                  onClick={() => navigate(`/${item._id}`, { state: item._id })}
                   className="cursor-pointer"
                 >
                   {item.name}
                 </Card.Title>
                 <Card.Text
-                  onClick={() => nevigate(`/${item._id}`, { state: item._id })}
+                  onClick={() => navigate(`/${item._id}`, { state: item._id })}
                   className="cursor-pointer"
                 >
                   {truncateText(item.description, 8)}
@@ -1142,6 +1148,22 @@ const Cards = ({ items }) => {
                     Add to Cart
                   </Button>
                 )}
+                <div className="d-flex mt-2">
+                  <WhatsappShareButton
+                    url={`http://localhost:3000/${item._id}`}
+                    title={item.name}
+                    separator=":: "
+                  >
+                    <WhatsappIcon size={32} round />
+                  </WhatsappShareButton>
+                  <FacebookShareButton
+                    url={`http://localhost:3000/${item._id}`}
+                    quote={item.name}
+                    className="ml-2"
+                  >
+                    <FacebookIcon size={32} round />
+                  </FacebookShareButton>
+                </div>
               </Card.Body>
             </Card>
           </motion.div>
