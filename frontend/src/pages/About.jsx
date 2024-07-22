@@ -7,7 +7,6 @@ import Navbar from "../components/Navbar";
 
 export default function About() {
   const [location, setLocation] = useState(null);
- 
 
   const locations = {
     SW:
@@ -18,8 +17,8 @@ export default function About() {
 
   return (
     <div className="container mx-auto px-4 py-8 p-4">
-     {/* <Navbar size={cart.length} /> */} {/*not working at the moment*/}
-      <h1 className="text-3xl font-bold mb-4 my-9">About Us</h1>
+      <Navbar />
+      <h1 className="text-3xl font-bold mb-4 my-9 mt-96">About Us</h1>
       <p className="mb-4">
         Welcome to our convenience store! Our current locations are in NE and
         SW. Pick one to display the map.
