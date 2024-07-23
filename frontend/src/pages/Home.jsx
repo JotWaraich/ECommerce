@@ -50,7 +50,9 @@ const Home = () => {
       </div>
       <CarouselPage />
       {/*   <SaltyCravings /> */}
+
       <Card items={item} />
+      <Footer />
     </div>
   );
 };

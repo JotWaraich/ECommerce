@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { Card, Button } from "react-bootstrap";
 import { motion } from "framer-motion";
-import { useCartItemsContext } from '../context/CartItemsContext';
+import { useCartItemsContext } from "../context/CartItemsContext";
 import { Link } from "react-router-dom";
+import Footer from "@/components/footer";
 
 const Cart = () => {
   const { cartItems, removeFromCart, setCartItems } = useCartItemsContext();
@@ -21,7 +22,7 @@ const Cart = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to fetch cart items');
+        throw new Error("Failed to fetch cart items");
       }
 
       const data = await response.json();
@@ -64,7 +65,10 @@ const Cart = () => {
                     <Card.Body>
                       <Card.Title>{item.name}</Card.Title>
                       <Card.Text>Price: ${item.price}</Card.Text>
-                      <Button onClick={() => handleRemoveFromCart(item)} variant="danger">
+                      <Button
+                        onClick={() => handleRemoveFromCart(item)}
+                        variant="danger"
+                      >
                         Remove from Cart
                       </Button>
                     </Card.Body>
@@ -72,7 +76,7 @@ const Cart = () => {
                 </motion.div>
               ))}
               <div className="col mt-4">
-                <Link to='/StripeContainer'>
+                <Link to="/StripeContainer">
                   <Button className="mt-3" variant="primary" block>
                     Proceed to Checkout
                   </Button>
@@ -84,6 +88,7 @@ const Cart = () => {
           )}
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
