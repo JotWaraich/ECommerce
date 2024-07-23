@@ -1029,16 +1029,18 @@ const Cards = ({ items }) => {
 export default Cards;*/
 
 import React, { useState, useEffect } from "react";
+import { Card, Button, Badge } from "react-bootstrap";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useCartItemsContext } from "../context/CartItemsContext";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   WhatsappShareButton,
   FacebookShareButton,
   WhatsappIcon,
   FacebookIcon,
 } from "react-share";
-
 // Function to truncate text
 const truncateText = (text, wordLimit) => {
   const words = text.split(" ");
@@ -1049,56 +1051,73 @@ const truncateText = (text, wordLimit) => {
 };
 
 // Cards component to display items
-const Cards = ({ items }) => {
-  // State to manage cart items and item quantities
+const Cards = ({ items = [] }) => {
+  const { cartItems, addToCartContext } = useCartItemsContext(); // Ensure correct usage
   const [itemQuantities, setItemQuantities] = useState({});
-
-  const { cartItems, addToCart } = useCartItemsContext();
   const [CartItemsQuantity, setCartItemsQuantity] = useState(0);
   const [CartItemsPrice, setCartItemsPrice] = useState(0);
-  const navigate = useNavigate();
+  const nevigate = useNavigate();
 
   const getCartItems = async () => {
     try {
-      const response = await fetch("/api/cart/items", {
-        method: "GET",
+      const response = await fetch("/api/cart/add", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify({
+          email: "uroobanumair", // Replace with actual user email
+          itemId: item._id,
+          cartItemsPrice: item.price,
+          cartItemsQuantity: quantity,
+        }),
       });
 
       const data = await response.json();
-      //setItems(data);
       console.log(data);
+
+      // Add or update item in context
+      if (cartItems.find((cartItem) => cartItem._id === item._id)) {
+        increaseQuantity(item);
+      } else {
+        addToCartContext({ ...item, quantity });
+      }
+
+      // Reset the quantity for this item after adding to cart
+      setItemQuantities((prevQuantities) => ({
+        ...prevQuantities,
+        [item._id]: 0,
+      }));
     } catch (error) {
-      console.log("error getting items", error);
+      console.log("Error adding item", error);
     }
   };
-
-  const addCartItem = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-
-    formData.append("price", CartItemsPrice);
-    formData.append("quantity", CartItemsQuantity);
-
+  // wishlist adding function
+  // Function to handle adding item to wishlist
+  // Function to handle adding item to wishlist
+  const handleAddToWishlist = async (item) => {
     try {
-      const response = await fetch("/api/items/add", {
+      const response = await fetch("/api/wishlist/add", {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          itemId: item._id,
+        }),
       });
 
       const data = await response.json();
       console.log(data);
-      getCartItems();
+
+      // Show success toast message
+      toast.success("Item successfully added to the wishlist!");
     } catch (error) {
-      console.log("error adding item", error);
+      console.log("Error adding item to wishlist", error);
+      // Show error toast message
+      toast.error("Failed to add item to wishlist.");
     }
   };
-
-  useEffect(() => {
-    getCartItems();
-  }, []);
 
   return (
     <div className="flex flex-wrap justify-center">
@@ -1115,61 +1134,39 @@ const Cards = ({ items }) => {
               <img
                 src={`/api/items/images/${item.image}`}
                 alt={item.name}
-                className="rounded-xl cursor-pointer"
-                onClick={() => navigate(`/${item._id}`, { state: item._id })}
-              />
-            </figure>
-            <div className="card-body items-center text-center">
-              <h2
-                className="card-title cursor-pointer"
-                onClick={() => navigate(`/${item._id}`, { state: item._id })}
-              >
-                {item.name}
-              </h2>
-              <p
+                onClick={() => nevigate(`/${item._id}`, { state: item._id })}
                 className="cursor-pointer"
-                onClick={() => navigate(`/${item._id}`, { state: item._id })}
-              >
-                {truncateText(item.description, 8)}
-              </p>
-              <p>${item.price}</p>
-              {itemQuantities[item._id] ? (
-                <div className="flex items-center mt-2">
-                  <button
-                    onClick={() => addCartItem()}
-                    className="btn btn-success"
-                  >
-                    Add More
-                  </button>
-                  <span className="badge badge-info ml-2">
-                    {itemQuantities[item._id]}
-                  </span>
-                </div>
-              ) : (
-                <button
-                  onClick={() => addToCart(item)}
-                  className="btn btn-primary mt-2"
+              />
+              <Card.Body>
+                <Card.Title
+                  onClick={() => nevigate(`/${item._id}`, { state: item._id })}
+                  className="cursor-pointer"
                 >
-                  Add to Cart
-                </button>
-              )}
-              <div className="flex mt-2">
-                <WhatsappShareButton
-                  url={`http://localhost:3000/${item._id}`}
-                  title={item.name}
-                  separator=":: "
+                  {item.name}
+                </Card.Title>
+                <Card.Text
+                  onClick={() => nevigate(`/${item._id}`, { state: item._id })}
+                  className="cursor-pointer"
                 >
-                  <WhatsappIcon size={32} round />
-                </WhatsappShareButton>
-                <FacebookShareButton
-                  url={`http://localhost:3000/${item._id}`}
-                  quote={item.name}
-                  className="ml-2"
-                >
-                  <FacebookIcon size={32} round />
-                </FacebookShareButton>
-              </div>
-            </div>
+                  {truncateText(item.description, 8)}
+                </Card.Text>
+                <Card.Text>${item.price}</Card.Text>
+                {itemQuantities[item._id] ? (
+                  <div>
+                    <Button onClick={() => addCartItem()} variant="success">
+                      Add More
+                    </Button>
+                    <Badge pill variant="info" className="ml-2">
+                      {itemQuantities[item._id]}
+                    </Badge>
+                  </div>
+                ) : (
+                  <Button onClick={() => addToCart(item)} variant="primary">
+                    Add to Cart
+                  </Button>
+                )}
+              </Card.Body>
+            </Card>
           </motion.div>
         ))
       ) : (
