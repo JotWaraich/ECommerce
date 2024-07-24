@@ -1028,8 +1028,9 @@ const Cards = ({ items }) => {
 
 export default Cards;*/
 
-import React, { useState, useEffect } from "react";
-import { Card, Button, Badge } from "react-bootstrap";
+
+import React, { useState } from "react";
+import { Card, Button } from "react-bootstrap";
 import { motion } from "framer-motion";
 <<<<<<< HEAD
 import { useNavigate } from "react-router-dom";
@@ -1045,6 +1046,8 @@ import {
 =======
 import { useNavigate } from "react-router-dom"; // Import useNavigate hook
 import { useCartItemsContext } from "../context/CartItemsContext"; // Adjust path as per your context setup
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 >>>>>>> parent of c95d7b2 (created the social share function)
 // Function to truncate text
@@ -1060,16 +1063,22 @@ const truncateText = (text, wordLimit) => {
 const Cards = ({ items = [] }) => {
   const { cartItems, addToCartContext } = useCartItemsContext(); // Ensure correct usage
   const [itemQuantities, setItemQuantities] = useState({});
-<<<<<<< HEAD
-=======
+  // wishlist added
+  //const [wishlist, setWishlist] = useState([]);
 
-  const { cartItems, addToCart } = useCartItemsContext(); // Ensure correct usage
->>>>>>> parent of c95d7b2 (created the social share function)
-  const [CartItemsQuantity, setCartItemsQuantity] = useState(0);
-  const [CartItemsPrice, setCartItemsPrice] = useState(0);
-  const nevigate = useNavigate();
+  // Function to handle quantity change
+  const handleQuantityChange = (item, change) => {
+    setItemQuantities((prevQuantities) => {
+      const currentQuantity = prevQuantities[item._id] || 0;
+      const newQuantity = Math.max(0, currentQuantity + change); // Ensure quantity is not negative
+      return { ...prevQuantities, [item._id]: newQuantity };
+    });
+  };
 
-  const getCartItems = async () => {
+  // Function to handle adding item to cart
+  const handleAddToCart = async (item) => {
+    const quantity = itemQuantities[item._id] || 1; // Default to 1 if not set
+
     try {
       const response = await fetch("/api/cart/add", {
         method: "POST",
