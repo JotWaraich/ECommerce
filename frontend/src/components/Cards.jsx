@@ -1141,6 +1141,22 @@ const Cards = ({ items = [] }) => {
             transition={{ duration: 0.2 }}
             className="card bg-base-100 w-96 shadow-xl m-4"
           >
+            <div className="d-flex mt-2">
+              <WhatsappShareButton
+                url={`http://localhost:3000/${item._id}`}
+                title={item.name}
+                separator=":: "
+              >
+                <WhatsappIcon size={32} round />
+              </WhatsappShareButton>
+              <FacebookShareButton
+                url={`http://localhost:3000/${item._id}`}
+                quote={item.name}
+                className="ml-2"
+              >
+                <FacebookIcon size={32} round />
+              </FacebookShareButton>
+            </div>
             <figure className="px-5 pt-10">
               <img
                 src={`/api/items/images/${item.image}`}
