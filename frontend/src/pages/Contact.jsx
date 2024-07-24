@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar.jsx";
 import ChatbotComponent from "./Chatbot.jsx";
-import Footer from "@/components/footer.jsx";
 
 export default function Contact() {
   const [result, setResult] = useState("");
@@ -123,7 +122,6 @@ export default function Contact() {
         </div>
         <ChatbotComponent />
       </div>
-      <Footer />
     </div>
   );
 }

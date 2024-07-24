@@ -2,7 +2,6 @@ import React from "react";
 import Navbar from "@/components/Navbar";
 import { useRef } from "react";
 import emailjs from "@emailjs/browser";
-import Footer from "@/components/footer";
 //References: https://www.youtube.com/watch?v=Nm_IHH4iOx4&t=326s&ab_channel=techM
 export default function App() {
   return (
@@ -236,23 +235,23 @@ const ApplyForm = () => {
   );
 };
 
-// const Footer = () => {
-//   return (
-//     <footer className="bg-gray-800 text-white py-4">
-//       <div className="max-w-4xl mx-auto text-center">
-//         <p className="text-sm">Apply for Jobs | Trusted since 2018</p>
-//         <div className="flex justify-center space-x-4 mt-4">
-//           <a href="#" className="text-white">
-//             About the Company
-//           </a>
-//           <a href="#" className="text-white">
-//             Community
-//           </a>
-//           <a href="#" className="text-white">
-//             Follow us on Social
-//           </a>
-//         </div>
-//       </div>
-//     </footer>
-//   );
-// };
+const Footer = () => {
+  return (
+    <footer className="bg-gray-800 text-white py-4">
+      <div className="max-w-4xl mx-auto text-center">
+        <p className="text-sm">Apply for Jobs | Trusted since 2018</p>
+        <div className="flex justify-center space-x-4 mt-4">
+          <a href="#" className="text-white">
+            About the Company
+          </a>
+          <a href="#" className="text-white">
+            Community
+          </a>
+          <a href="#" className="text-white">
+            Follow us on Social
+          </a>
+        </div>
+      </div>
+    </footer>
+  );
+};

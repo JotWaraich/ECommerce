@@ -1,10 +1,10 @@
 /*import React, { useEffect } from "react";
 import { Card, Button } from "react-bootstrap";
 import { motion } from "framer-motion";
-import { useCartItemsContext } from "../context/CartItemsContext";
+import { useCartItemsContext } from '../context/CartItemsContext';
 import { Link } from "react-router-dom";
 import Footer from "@/components/footer";
-import { FaShoppingCart } from "react-icons/fa";
+
 const Cart = () => {
   const { cartItems, removeFromCart, setCartItems } = useCartItemsContext();
 
@@ -22,7 +22,7 @@ const Cart = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to fetch cart items");
+        throw new Error('Failed to fetch cart items');
       }
 
       const data = await response.json();
@@ -85,7 +85,6 @@ const Cart = () => {
           )}
         </div>
       </div>
-      <Footer />
     </div>
   );
 };
