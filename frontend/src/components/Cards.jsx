@@ -1031,6 +1031,7 @@ export default Cards;*/
 import React, { useState, useEffect } from "react";
 import { Card, Button, Badge } from "react-bootstrap";
 import { motion } from "framer-motion";
+<<<<<<< HEAD
 import { useNavigate } from "react-router-dom";
 import { useCartItemsContext } from "../context/CartItemsContext";
 import { toast } from "react-toastify";
@@ -1041,6 +1042,11 @@ import {
   WhatsappIcon,
   FacebookIcon,
 } from "react-share";
+=======
+import { useNavigate } from "react-router-dom"; // Import useNavigate hook
+import { useCartItemsContext } from "../context/CartItemsContext"; // Adjust path as per your context setup
+
+>>>>>>> parent of c95d7b2 (created the social share function)
 // Function to truncate text
 const truncateText = (text, wordLimit) => {
   const words = text.split(" ");
@@ -1054,6 +1060,11 @@ const truncateText = (text, wordLimit) => {
 const Cards = ({ items = [] }) => {
   const { cartItems, addToCartContext } = useCartItemsContext(); // Ensure correct usage
   const [itemQuantities, setItemQuantities] = useState({});
+<<<<<<< HEAD
+=======
+
+  const { cartItems, addToCart } = useCartItemsContext(); // Ensure correct usage
+>>>>>>> parent of c95d7b2 (created the social share function)
   const [CartItemsQuantity, setCartItemsQuantity] = useState(0);
   const [CartItemsPrice, setCartItemsPrice] = useState(0);
   const nevigate = useNavigate();
