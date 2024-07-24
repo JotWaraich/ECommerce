@@ -74,13 +74,13 @@ export default function App() {
           element={!authUser ? <SignUp /> : <Navigate to="/" />}
         />
 
-        {/* <Route
-            path="/Products"
-            element={!authUser ? <Products /> : <Navigate to="/" />}
-          />   */}
+        <Route
+          path="/Products"
+          element={!authUser ? <Products /> : <Navigate to="/" />}
+        />
 
         {/*   <Route path="/StripeContainer" element={<StripeContainer />} /> */}
-        <Route path="/StripeContainer" element={<StripeContainer />} />
+        {/* <Route path="/StripeContainer" element={<StripeContainer />} /> */}
 
         <Route path="/About" element={<About />} />
         <Route path="/cart" element={<Cart />} />
