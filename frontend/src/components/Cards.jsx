@@ -1028,11 +1028,9 @@ const Cards = ({ items }) => {
 
 export default Cards;*/
 
-
 import React, { useState } from "react";
 import { Card, Button } from "react-bootstrap";
 import { motion } from "framer-motion";
-<<<<<<< HEAD
 import { useNavigate } from "react-router-dom";
 import { useCartItemsContext } from "../context/CartItemsContext";
 import { toast } from "react-toastify";
@@ -1043,13 +1041,7 @@ import {
   WhatsappIcon,
   FacebookIcon,
 } from "react-share";
-=======
-import { useNavigate } from "react-router-dom"; // Import useNavigate hook
-import { useCartItemsContext } from "../context/CartItemsContext"; // Adjust path as per your context setup
-import {toast} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
->>>>>>> parent of c95d7b2 (created the social share function)
 // Function to truncate text
 const truncateText = (text, wordLimit) => {
   const words = text.split(" ");
@@ -1061,10 +1053,10 @@ const truncateText = (text, wordLimit) => {
 
 // Cards component to display items
 const Cards = ({ items = [] }) => {
-  const { cartItems, addToCartContext } = useCartItemsContext(); // Ensure correct usage
+  const { cartItems, addToCartContext, increaseQuantity } =
+    useCartItemsContext(); // Ensure correct usage
   const [itemQuantities, setItemQuantities] = useState({});
-  // wishlist added
-  //const [wishlist, setWishlist] = useState([]);
+  const navigate = useNavigate();
 
   // Function to handle quantity change
   const handleQuantityChange = (item, change) => {
@@ -1112,8 +1104,7 @@ const Cards = ({ items = [] }) => {
       console.log("Error adding item", error);
     }
   };
-  // wishlist adding function
-  // Function to handle adding item to wishlist
+
   // Function to handle adding item to wishlist
   const handleAddToWishlist = async (item) => {
     try {
@@ -1154,39 +1145,36 @@ const Cards = ({ items = [] }) => {
               <img
                 src={`/api/items/images/${item.image}`}
                 alt={item.name}
-                onClick={() => nevigate(`/${item._id}`, { state: item._id })}
+                onClick={() => navigate(`/${item._id}`, { state: item._id })}
                 className="cursor-pointer"
               />
-              <Card.Body>
-                <Card.Title
-                  onClick={() => nevigate(`/${item._id}`, { state: item._id })}
-                  className="cursor-pointer"
+            </figure>
+            <Card.Body>
+              <Card.Title
+                onClick={() => navigate(`/${item._id}`, { state: item._id })}
+                className="cursor-pointer"
+              >
+                {item.name}
+              </Card.Title>
+              <Card.Text
+                onClick={() => navigate(`/${item._id}`, { state: item._id })}
+                className="cursor-pointer"
+              >
+                {truncateText(item.description, 8)}
+              </Card.Text>
+              <Card.Text>${item.price}</Card.Text>
+              <div className="d-flex justify-content-between">
+                <Button onClick={() => handleAddToCart(item)} variant="primary">
+                  Add to Cart
+                </Button>
+                <Button
+                  onClick={() => handleAddToWishlist(item)}
+                  variant="secondary"
                 >
-                  {item.name}
-                </Card.Title>
-                <Card.Text
-                  onClick={() => nevigate(`/${item._id}`, { state: item._id })}
-                  className="cursor-pointer"
-                >
-                  {truncateText(item.description, 8)}
-                </Card.Text>
-                <Card.Text>${item.price}</Card.Text>
-                {itemQuantities[item._id] ? (
-                  <div>
-                    <Button onClick={() => addCartItem()} variant="success">
-                      Add More
-                    </Button>
-                    <Badge pill variant="info" className="ml-2">
-                      {itemQuantities[item._id]}
-                    </Badge>
-                  </div>
-                ) : (
-                  <Button onClick={() => addToCart(item)} variant="primary">
-                    Add to Cart
-                  </Button>
-                )}
-              </Card.Body>
-            </Card>
+                  Add to Wishlist
+                </Button>
+              </div>
+            </Card.Body>
           </motion.div>
         ))
       ) : (
