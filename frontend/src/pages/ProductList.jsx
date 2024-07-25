@@ -1,6 +1,5 @@
-{
-  /*import React, { useState, useEffect } from 'react';
-import Card from '../components/Cards'; // Assuming Card component displays individual product cards
+import React, { useState, useEffect } from "react";
+import Card from "../components/Cards"; // Assuming Card component displays individual product cards
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -9,15 +8,15 @@ const ProductList = () => {
     // Example fetch data function
     const fetchProducts = async () => {
       try {
-        const response = await fetch('/api/products');
+        const response = await fetch("/api/products");
         if (response.ok) {
           const data = await response.json();
           setProducts(data); // Set products state with fetched data
         } else {
-          throw new Error('Failed to fetch products');
+          throw new Error("Failed to fetch products");
         }
       } catch (error) {
-        console.error('Error fetching products:', error);
+        console.error("Error fetching products:", error);
       }
     };
 
@@ -32,7 +31,5 @@ const ProductList = () => {
     </div>
   );
 };
- 
+
 export default ProductList;
-*/
-}

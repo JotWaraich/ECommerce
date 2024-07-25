@@ -1141,6 +1141,7 @@ const Cards = ({ items = [] }) => {
             transition={{ duration: 0.2 }}
             className="card bg-base-100 w-96 shadow-xl m-4"
           >
+            {/* Refrence : https://www.youtube.com/watch?v=2BnTYEafRQc&t=438s&ab_channel=FullstackTechies */}
             <div className="d-flex mt-2">
               <WhatsappShareButton
                 url={`http://localhost:3000/${item._id}`}
