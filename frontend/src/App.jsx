@@ -14,6 +14,8 @@ import Contact from "./pages/Contact";
 import AdminCheckout from "./pages/AdminCheckout";
 import Careers from "./pages/Careers";
 import ItemDetails from "./pages/itemDetails";
+import StripeContainer from "./pages/StripeContainer";
+import Products from "./pages/Products";
 //import StripeContainer from "./pages/StripeContainer";
 import WishList from "./pages/WishList";
 import Cancel from "./pages/Cancel";
@@ -71,11 +73,15 @@ export default function App() {
           path="/signup"
           element={!authUser ? <SignUp /> : <Navigate to="/" />}
         />
-        {/* <Route
-            path="/Products"
-            element={!authUser ? <Products /> : <Navigate to="/" />}
-          />   */}
-     {/*   <Route path="/StripeContainer" element={<StripeContainer />} /> */}
+
+        <Route
+          path="/Products"
+          element={authUser ? <Products /> : <Navigate to="/" />}
+        />
+
+        {/*   <Route path="/StripeContainer" element={<StripeContainer />} /> */}
+        {/* <Route path="/StripeContainer" element={<StripeContainer />} /> */}
+
         <Route path="/About" element={<About />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/Contact" element={<Contact />} />
@@ -88,15 +94,12 @@ export default function App() {
           element={!authUser ? <AdminCheckout /> : <Navigate to="/" />}
         />
         <Route path="/search" element={<Search />} />
-
         <Route path="/Careers" element={<Careers />} />
         <Route path="/:details" element={<ItemDetails />} />
-        <Route path = "/wishlist" element = {<WishList />} />
-
+        <Route path="/wishlist" element={<WishList />} />
         <Route path="/Cancel" element={<Cancel />} />
-
         <Route path="/Success" element={<Success />} />
-        <Route path = "/Payment" element ={<PaymentPage />} />
+        <Route path="/Payment" element={<PaymentPage />} />
       </Routes>
     </>
   );

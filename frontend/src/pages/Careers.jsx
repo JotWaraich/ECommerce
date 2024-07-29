@@ -7,10 +7,10 @@ export default function App() {
   return (
     <div className="w-screen min-h-screen bg-gray-100">
       <Navbar />
-      <HeroSection />
+      {/* <HeroSection />
       <JobSection />
       <RecruitmentSection />
-      <SubscriptionSection />
+      <SubscriptionSection /> */}
       <ApplyForm />
       <Footer />
     </div>
